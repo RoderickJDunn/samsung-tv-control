@@ -357,6 +357,19 @@ class Samsung {
       this.ws = new WebSocket(this.WS_URL, { rejectUnauthorized: false })
     } else {
       this.wsKeepAlive()
+      if (this.PORT === 8001) {
+        setTimeout(() => {
+          console.log("this.ws after timeout: ", this.ws == null ? "null" : "not null");
+          this.ws && this.ws.send(JSON.stringify(command));
+        }, 1000);
+      }
+      else {
+        if (this.ws) {
+          console.log(" .... this.ws is OK");
+          this.ws.send(JSON.stringify(command));
+        }
+      }
+      return;
     }
 
     this.LOGGER.log('command', command, '_send')
